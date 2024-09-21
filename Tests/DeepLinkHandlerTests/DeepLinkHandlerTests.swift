@@ -4,13 +4,13 @@ import Testing
 
 @Suite("When a DeepLinkHandler is created") struct DeepLinkHandlerInitests {
 
-  @Test func initialisesWith0Elements() {
+  @MainActor @Test func initialisesWith0Elements() {
     let sut = DeepLinkHandler()
 
     #expect(sut.paths.keys.count == 0)
   }
 
-  @Test func unlessIProvideMyOwn() {
+  @MainActor @Test func unlessIProvideMyOwn() {
     let sut = DeepLinkHandler(paths: ["/foo": { _ in } ])
 
     #expect(sut.paths.keys.count == 1)
@@ -26,7 +26,7 @@ import Testing
 
 @Suite("When a DeepLinkHandler registers a path") struct DeepLinkHandlerRegisterTests {
 
-  @Test func aNewPathIsAdded() {
+  @MainActor @Test func aNewPathIsAdded() {
     let sut = DeepLinkHandler()
 
     try! sut.register("/foo/bar", action: { _ in })
@@ -34,7 +34,7 @@ import Testing
     #expect(sut.paths.keys.count == 1)
   }
 
-  @Test func anExistingPathIsNOTAdded() {
+  @MainActor @Test func anExistingPathIsNOTAdded() {
     let sut = DeepLinkHandler(paths: ["/foo/bar": { _ in }])
 
     #expect(throws: DeepLinkHandlerError.actionAlreadyRegistered) {
@@ -44,7 +44,7 @@ import Testing
     #expect(sut.paths.keys.count == 1)
   }
 
-  @Test func anExistingPathCanBeOverwritten() throws {
+  @MainActor @Test func anExistingPathCanBeOverwritten() throws {
     var testedValue = false
     let firstClosure: ([URLQueryItem]?) -> Void = { _ in testedValue = false }
     let secondClosure: ([URLQueryItem]?) -> Void = { _ in testedValue = true }
@@ -57,7 +57,7 @@ import Testing
     #expect(testedValue == true)
   }
 
-  @Test func thePathCanBeUnregistered() {
+  @MainActor @Test func thePathCanBeUnregistered() {
     let sut = DeepLinkHandler()
 
     try! sut.register("/foo/bar", action: { _ in })
@@ -69,7 +69,7 @@ import Testing
 
 @Suite("When a DeepLinkHandler contains one path") struct DeepLinkHandlerTests {
 
-  @Test func itsActionCanBeHandled() {
+  @MainActor @Test func itsActionCanBeHandled() {
     var handledFooBar = false
     let sut = DeepLinkHandler(paths: ["/foo/bar": { _ in handledFooBar = true }])
 
@@ -78,7 +78,7 @@ import Testing
     #expect(handledFooBar == true)
   }
 
-  @Test func itsActionParametersCanBeHandled() {
+  @MainActor @Test func itsActionParametersCanBeHandled() {
     var handledFooBarParams: [URLQueryItem]?
     let sut = DeepLinkHandler(paths: [
       "/foo/bar": { params in handledFooBarParams = params }
@@ -92,15 +92,15 @@ import Testing
     ])
   }
 
-  @Test func throwsAnErrorIfTriesToHandleANotRegisteredPath() {
+  @MainActor @Test func throwsAnErrorIfTriesToHandleANotRegisteredPath() {
     let sut = DeepLinkHandler(paths: ["/foo/bar": { _ in }])
 
-    #expect(throws: DeepLinkHandlerError.actionNotRegistered) {
+    #expect(throws: DeepLinkHandlerError.actionNotRegistered) { @MainActor in
       try sut.handle("/baz/qux")
     }
   }
 
-  @Test func throwsAnErrorIfThePathIsNotAURL() {
+  @MainActor @Test func throwsAnErrorIfThePathIsNotAURL() {
     let sut = DeepLinkHandler()
     let badURL = "#@^" // The initial # character prevents URLComponents from creating a path
 
