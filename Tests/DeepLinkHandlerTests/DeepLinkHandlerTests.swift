@@ -78,6 +78,26 @@ import Testing
     #expect(handledFooBar == true)
   }
 
+  @MainActor @Test func itsActionCanBeHandledUsingAFullURL() throws {
+    var handledFooBar = false
+    let sut = DeepLinkHandler(paths: ["/foo/bar": { _ in handledFooBar = true }])
+    let url = "http://somehost.com/foo/bar"
+
+    try #require(try sut.handle(url))
+
+    #expect(handledFooBar == true)
+  }
+
+  @MainActor @Test func itsActionCanBeHandledUsingARealURLObject() throws {
+    var handledFooBar = false
+    let sut = DeepLinkHandler(paths: ["/foo/bar": { _ in handledFooBar = true }])
+    let url = try #require(URL(string: "http://somehost.com/foo/bar"))
+
+    try #require(try sut.handle(url))
+
+    #expect(handledFooBar == true)
+  }
+
   @MainActor @Test func itsActionParametersCanBeHandled() throws {
     var handledFooBarParams: [URLQueryItem]?
     let sut = DeepLinkHandler()

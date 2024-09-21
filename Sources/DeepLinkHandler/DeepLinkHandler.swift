@@ -10,7 +10,18 @@ public class DeepLinkHandler {
   }
 
   // MARK: Register
-
+  
+  /// Registers a path and its corresponding action to be executed at a later time.
+  ///
+  /// To register the same path twice would throw the error `.actionAlreadyRegistered`.
+  /// If you want to remove this safety check use ``unsafeRegister(_:action:)``.
+  /// To remove a path or to safely overwrite an existent one, use ``unregister(_:)``.
+  ///
+  /// This method must be called from the main thread to avoid race conditions.
+  ///
+  /// - Parameters:
+  ///   - path: the URL path expected to match a corresponding action. Do not consider query items nor the host here.
+  ///   - action: the closure that will be executed for a matching URL path. The parameter passes any query items if present in the handled URL.
   @MainActor
   public func register(_ path: String, action: @escaping ([URLQueryItem]?) throws -> Void) throws {
     guard paths.keys.contains(path) == false else {
@@ -45,5 +56,10 @@ public class DeepLinkHandler {
     }
 
     try action(urlComponents.queryItems)
+  }
+
+  @MainActor
+  public func handle(_ url: URL) throws {
+    try self.handle(url.absoluteString)
   }
 }
