@@ -78,13 +78,14 @@ import Testing
     #expect(handledFooBar == true)
   }
 
-  @MainActor @Test func itsActionParametersCanBeHandled() {
+  @MainActor @Test func itsActionParametersCanBeHandled() throws {
     var handledFooBarParams: [URLQueryItem]?
-    let sut = DeepLinkHandler(paths: [
-      "/foo/bar": { params in handledFooBarParams = params }
-    ])
+    let sut = DeepLinkHandler()
 
-    try! sut.handle("/foo/bar?param1=123&param2=ABC")
+    try #require(sut.register("/foo/bar") {
+      params in handledFooBarParams = params
+    })
+    try #require(try sut.handle("/foo/bar?param1=123&param2=ABC"))
 
     #expect(handledFooBarParams == [
       URLQueryItem(name: "param1", value: "123"),
