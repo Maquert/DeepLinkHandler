@@ -1,9 +1,9 @@
 import Foundation
 import Testing
-@testable import DeepLinkHandler
+// All these tests use the public API. No internal or private code is used here.
+import DeepLinkHandler
 
 @Suite("When a DeepLinkHandler is created") struct DeepLinkHandlerInitests {
-
   @MainActor @Test func initialisesWith0Elements() {
     let sut = DeepLinkHandler()
 
@@ -24,6 +24,7 @@ import Testing
   }
 }
 
+
 @Suite("When a DeepLinkHandler registers a path") struct DeepLinkHandlerRegisterTests {
 
   @MainActor @Test func aNewPathIsAdded() {
@@ -37,7 +38,7 @@ import Testing
   @MainActor @Test func anExistingPathIsNOTAdded() {
     let sut = DeepLinkHandler(paths: ["/foo/bar": { _ in }])
 
-    #expect(throws: DeepLinkHandlerError.actionAlreadyRegistered) {
+    #expect(throws: DeepLinkError(.pathAlreadyRegistered)) {
       try sut.register("/foo/bar", action: { _ in })
     }
 
@@ -66,6 +67,7 @@ import Testing
     #expect(sut.paths.keys.count == 0)
   }
 }
+
 
 @Suite("When a DeepLinkHandler contains one path") struct DeepLinkHandlerTests {
 
@@ -116,7 +118,7 @@ import Testing
   @MainActor @Test func throwsAnErrorIfTriesToHandleANotRegisteredPath() {
     let sut = DeepLinkHandler(paths: ["/foo/bar": { _ in }])
 
-    #expect(throws: DeepLinkHandlerError.actionNotRegistered) { @MainActor in
+    #expect(throws: DeepLinkError(.pathNotRegistered)) { @MainActor in
       try sut.handle("/baz/qux")
     }
   }
@@ -129,9 +131,4 @@ import Testing
       try sut.handle(badURL)
     }
   }
-}
-
-
-@Test(arguments: DeepLinkHandlerError.allCases) func deepLinkErrorsDescriptions(_ error: DeepLinkHandlerError) {
-  #expect(error.errorDescription != "")
 }
