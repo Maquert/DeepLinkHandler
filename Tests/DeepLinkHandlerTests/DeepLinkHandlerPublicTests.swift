@@ -18,7 +18,7 @@ import DeepLinkHandler
 
   // Swift 6 concurrency check
   @MainActor @Test func withTheIsolatedContextInitialiser() {
-    let sut = DeepLinkHandler.live
+    let sut = DeepLinkHandler.main
 
     #expect(sut.paths.keys.count == 0)
   }

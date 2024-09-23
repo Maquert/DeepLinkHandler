@@ -8,5 +8,5 @@
 /// ```
 extension Parameter {
   /// Parameter "id"
-  public static let id: Parameter = Self(rawValue: "id")
+  public static let id = Self(rawValue: "id")
 }
