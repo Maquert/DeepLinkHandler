@@ -1,3 +1,5 @@
+[![SPM compatible](https://img.shields.io/badge/SwiftPM-Compatible-brightgreen.svg)](https://swift.org/package-manager/)
+
 # README
 
 ## DeepLinkHandler
