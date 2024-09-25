@@ -60,9 +60,15 @@ To register a path with its corresponding action:
 ```swift
 do {
   // Expects URLs like `/featureA/detail?id=123`
-  deeplinkHandler.register("/featureA/detail") { queryItems in
+  try deeplinkHandler.register("/featureA/detail") { queryItems in
     guard let id = queryItems[.id] else { throw DeepLinkError(.missingQueryItem) }
     navigateToFeatureADetail(id: id)
+  } catch DeepLinkError.pathAlreadyRegistered {
+    // You already registered this path
+  } catch is DeepLinkError {
+    // Fallback for other deep link errors
+  } catch let someError {
+    // Fallback for generic errors
   }
 }
 ```
@@ -71,8 +77,17 @@ When your app receives a URL, preprocess or transform it (more in the next secti
 using the DeepLinkHandler instance:
 
 ```swift
-  let url = ... // `https://domain.io/featureA/detail?id=123` or simply `/featureA/detail?id=123`
-  deeplinkHandler.handle(url)
+  // `https://domain.io/featureA/detail?id=123` or simply `/featureA/detail?id=123`
+  let url = ... 
+  do {
+   try deeplinkHandler.handle(url)
+  } catch DeepLinkError.pathNotRegistered {
+    // You never registered this path
+  } catch is DeepLinkError {
+    // Fallback for other deep link errors
+  } catch let someError { 
+    // Fallback for generic errors
+  }
 ```
 
 The closure registered earlier will execute, causing a side effect (typically navigation) beyond 
