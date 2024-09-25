@@ -6,7 +6,7 @@
 
 # README
 
-![DeepLinkHandler](https://github.com/maquert/DeepLinkHandler/blob/main/DeepLinkHandler.png)
+![DeepLinkHandler](https://github.com/maquert/DeepLinkHandler/blob/main/DeepLinkHandler_icon.png)
 
 ## DeepLinkHandler
 
