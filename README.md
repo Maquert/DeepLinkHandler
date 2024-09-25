@@ -6,6 +6,8 @@
 
 # README
 
+![DeepLinkHandler](https://github.com/maquert/DeepLinkHandler/blob/main/DeepLinkHandler.png)
+
 ## DeepLinkHandler
 
 DeepLinkHandler is a lightweight and opinionated package designed to streamline how a Swift application organises 
@@ -21,9 +23,20 @@ solely as internal links managed by mobile developers, independent of any web st
 
 This package is not intended for universal link handling although universal links can be transformed into internal links.
 
-[More on this in the Usage section](#expected-uri-shape-for-deep-links).
+> [!Note] 
+> More about this [in the Usage section](#expected-uri-shape-for-deep-links).
 
-## DeepLinkError
+
+## Installation
+1. In Xcode, from the **File** menu, select **Add Package Dependencies... **
+2. Enter "https://github.com/Maquert/DeepLinkHandler" into the text field. 
+3. Add **DeepLinkHandler** to your app target.
+
+> [!Note] 
+> If you want to use DeepLinkHandler in a mixed combination of targets and SPM packages (or from other targets),
+> you need to create a shared framework that includes DeepLinkHandler and then import it from all of your targets
+> (as opposed to adding this package in multiple places).
+
 
 ## Usage
 
@@ -33,7 +46,8 @@ First, create an instance of `DeepLinkHandler`. It is recommended to integrate t
 your preferred dependency management system, ensuring a single instance is accessible throughout
 your codebase.
 
-📙 Note: DeepLinkHandler is a reference type.
+> [!Note] 
+> DeepLinkHandler is a reference type.
 
 You can initialize it as follows:
 
