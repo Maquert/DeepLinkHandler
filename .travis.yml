@@ -1,0 +1,14 @@
+language: swift
+osx_image: xcode16
+env:
+  - PROJECT_NAME=DeepLinkHandler
+
+before_install:
+- gem install xcpretty
+
+install: swift package update
+
+script:
+  - swiftlint
+  - swift build
+  - swift test
