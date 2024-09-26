@@ -1,7 +1,7 @@
-import Foundation
-import Testing
 // All these tests use the public API. No internal or private code is used here.
 import DeepLinkHandler
+import Foundation
+import Testing
 
 @Suite("When a DeepLinkHandler is created") struct DeepLinkHandlerInitests {
   @MainActor @Test func initialisesWith0Elements() {
@@ -11,7 +11,7 @@ import DeepLinkHandler
   }
 
   @MainActor @Test func unlessIProvideMyOwn() {
-    let sut = DeepLinkHandler(paths: ["/foo": { _ in } ])
+    let sut = DeepLinkHandler(paths: ["/foo": { _ in }])
 
     #expect(sut.paths.keys.count == 1)
   }
@@ -23,7 +23,6 @@ import DeepLinkHandler
     #expect(sut.paths.keys.count == 0)
   }
 }
-
 
 @Suite("When a DeepLinkHandler registers a path") struct DeepLinkHandlerRegisterTests {
 
@@ -68,7 +67,6 @@ import DeepLinkHandler
   }
 }
 
-
 @Suite("When a DeepLinkHandler contains one path") struct DeepLinkHandlerTests {
 
   @MainActor @Test func itsActionCanBeHandled() {
@@ -104,15 +102,17 @@ import DeepLinkHandler
     var handledFooBarParams: [URLQueryItem]?
     let sut = DeepLinkHandler()
 
-    try #require(sut.register("/foo/bar") {
-      params in handledFooBarParams = params
-    })
+    try #require(
+      sut.register("/foo/bar") {
+        params in handledFooBarParams = params
+      })
     try #require(try sut.handle("/foo/bar?param1=123&param2=ABC"))
 
-    #expect(handledFooBarParams == [
-      URLQueryItem(name: "param1", value: "123"),
-      URLQueryItem(name: "param2", value: "ABC"),
-    ])
+    #expect(
+      handledFooBarParams == [
+        URLQueryItem(name: "param1", value: "123"),
+        URLQueryItem(name: "param2", value: "ABC"),
+      ])
   }
 
   @MainActor @Test func throwsAnErrorIfTriesToHandleANotRegisteredPath() {
@@ -125,7 +125,7 @@ import DeepLinkHandler
 
   @MainActor @Test func throwsAnErrorIfThePathIsNotAURL() {
     let sut = DeepLinkHandler()
-    let badURL = "#@^" // The initial # character prevents URLComponents from creating a path
+    let badURL = "#@^"  // The initial # character prevents URLComponents from creating a path
 
     #expect(throws: URLError(.badURL)) {
       try sut.handle(badURL)

@@ -12,7 +12,7 @@ public class DeepLinkHandler {
   /// Stored paths. Each path contains a closure that is executed when ``handle(_:)`` receives a matching one.
   @MainActor
   public private(set) var paths: [String: ([URLQueryItem]?) throws -> Void]
-  
+
   /// Initialises a `DeepLinkHandler` instance. You can provide default paths.
   /// - Parameter paths: default paths.
   @MainActor
@@ -21,7 +21,7 @@ public class DeepLinkHandler {
   }
 
   // MARK: Register
-  
+
   /// Registers a path and its corresponding action to be executed at a later time.
   ///
   /// To register the same path twice would throw the error `.actionAlreadyRegistered`.
@@ -43,7 +43,7 @@ public class DeepLinkHandler {
 
     paths[path] = action
   }
-  
+
   /// Registers a path and its corresponding action to be executed at a later time.
   ///
   /// Prefer ``register(_:action:)`` to avoid overwritting existing values by accident.
@@ -55,7 +55,7 @@ public class DeepLinkHandler {
   public func unsafeRegister(_ path: String, action: @escaping ([URLQueryItem]?) throws -> Void) {
     paths[path] = action
   }
-  
+
   /// Removes a path from `DeepLinkHandler`.
   ///
   /// - Parameter path: path to be removed from the array of paths.
@@ -65,7 +65,7 @@ public class DeepLinkHandler {
   }
 
   // MARK: Handle
-  
+
   /// Handles a URI string and executes the action closure provided when registered if a
   /// matching path is found.
   ///

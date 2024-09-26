@@ -1,8 +1,10 @@
 import Testing
+
 @testable import DeepLinkHandler
 
 @Suite("Internal DeepLinkErrors") struct DeepLinkErrorInternalTests {
-  @Test(arguments: DeepLinkError.allErrors) func deepLinkErrorsDescriptions(_ error: DeepLinkError) {
+  @Test(arguments: DeepLinkError.allErrors) func deepLinkErrorsDescriptions(_ error: DeepLinkError)
+  {
     #expect(error.errorDescription != "")
   }
 

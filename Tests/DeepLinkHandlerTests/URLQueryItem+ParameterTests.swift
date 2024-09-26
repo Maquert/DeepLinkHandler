@@ -1,6 +1,6 @@
+import DeepLinkHandler
 import Foundation
 import Testing
-import DeepLinkHandler
 
 @Suite("When I have an array of query items") struct URLQueryItemParameterTests {
   @Test func retrieveTheIdAsParameter() throws {
