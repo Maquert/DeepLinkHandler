@@ -9,19 +9,31 @@ on:
   pull_request:
     branches: [ "main" ]
 
+concurrency:
+  group: format-${{ github.ref }}
+  cancel-in-progress: true
+
 jobs:
   build:
-
     runs-on: macos-latest
 
     steps:
     - uses: actions/checkout@v4
-    - uses: swift-actions/setup-swift@v2
-      with:
-        swift-version: "6.0"
+    - name: Xcode Select
+      run: sudo xcode-select -s /Applications/Xcode_16.app
     - name: Get swift version
-      run: swift --version # Swift 6.0.0
+      run: swift --version
+    - name: Install
+      run: brew install swift-format
     - name: Build
       run: swift build -v
     - name: Run tests
       run: swift test -v
+    - name: Format
+      run: make format
+    - uses: stefanzweifel/git-auto-commit-action@v4
+      with:
+        commit_message: Run swift-format
+        branch: 'main'
+    env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
