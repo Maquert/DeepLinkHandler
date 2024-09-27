@@ -20,19 +20,18 @@ and manages deep links.
 
 A deep link is a **direct route** to a specific screen or action within your application, enabling users to **access content without navigating through multiple screens**.
 
-This package distinguishes ‘deep links’ from ‘universal links’ in the context of mobile app URL 
-handling. While universal links mirror web counterparts and may change, deep links are treated 
-solely as internal links managed by mobile developers, independent of any web structure. 
-
-This package is not intended for universal link handling although universal links can be transformed into internal links.
-
 > [!Note] 
+> This package distinguishes ‘deep links’ from ‘universal links’ in the context of mobile app URL 
+> handling. While universal links mirror web counterparts and may change, deep links are treated 
+> solely as internal links managed by mobile developers, independent of any web structure. 
+
+> This package is not intended for universal link handling although universal links can be transformed into internal links.
 > More about this [in the Usage section](#expected-uri-shape-for-deep-links).
 
 
 ## Installation
-1. In Xcode, from the **File** menu, select **Add Package Dependencies... **
-2. Enter "https://github.com/Maquert/DeepLinkHandler" into the text field. 
+1. In Xcode, from the **File** menu, select **Add Package Dependencies...**
+2. Enter "`https://github.com/Maquert/DeepLinkHandler`" into the text field. 
 3. Add **DeepLinkHandler** to your app target.
 
 > [!Note] 
@@ -56,7 +55,8 @@ You can initialize it as follows:
 
 ```swift
 let deeplinkHandler = DeepLinkHandler() 
-let deeplinkHandler = DeepLinkHandler.main // or use its static thread-safe instance
+// or use its thread-safe static initialiser
+let deeplinkHandler = DeepLinkHandler.main
 ```
 
 To register a path with its corresponding action:
