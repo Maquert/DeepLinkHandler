@@ -29,8 +29,8 @@ jobs:
       run: swift build -v
     - name: Run tests
       run: swift test -v
-    # - name: Format
-    #   run: make format
+    - name: Format
+      run: make format
     - uses: stefanzweifel/git-auto-commit-action@v4
       with:
         commit_message: Run swift-format
