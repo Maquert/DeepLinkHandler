@@ -1,14 +1,28 @@
-CONFIG = debug
-PLATFORM_IOS = iOS Simulator,name=iPhone 13 Pro
+PLATFORM_IOS = iOS Simulator,name=iPhone 16
 PLATFORM_MACOS = macOS
-PLATFORM_MAC_CATALYST = macOS,variant=Mac Catalyst
-PLATFORM_TVOS = tvOS Simulator,name=Apple TV
-PLATFORM_WATCHOS = watchOS Simulator,name=Apple Watch Series 7 (45mm)
 
 test-all: test build
 
 test-swift:
-	swift test
+	swift test -v
+
+build-ios:
+	xcodebuild build \
+		-workspace DeepLinkHandler.xcworkspace \
+		-scheme DynamicFramework \
+		-destination platform="$(PLATFORM_IOS)"
+
+build-macos:
+	xcodebuild build \
+		-workspace DeepLinkHandler.xcworkspace \
+		-scheme DynamicFramework \
+		-destination platform="$(PLATFORM_MACOS)"
+
+build-examples:
+	xcodebuild build \
+		-workspace DeepLinkHandler.xcworkspace \
+		-scheme Examples \
+		-destination platform="$(PLATFORM_IOS)"
 
 format:
 	swift format \

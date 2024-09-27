@@ -1,13 +1,12 @@
-# This workflow will build a Swift project
-# For more information see: https://docs.github.com/en/actions/automating-builds-and-tests/building-and-testing-swift
-
 name: CI
 
 on:
   push:
-    branches: [ "main" ]
+    branches:
+      - main
   pull_request:
-    branches: [ "main" ]
+    branches:
+      - '*'
 
 concurrency:
   group: format-${{ github.ref }}
@@ -15,25 +14,28 @@ concurrency:
 
 jobs:
   build:
+    name: build
     runs-on: macos-latest
+    strategy:
+      matrix:
+        xcode:
+          - '16'
+        platform:
+          - ios
+          - macos
+          - examples
 
     steps:
     - uses: actions/checkout@v4
-    - name: Xcode Select
-      run: sudo xcode-select -s /Applications/Xcode_16.app
+    - name: Select Xcode ${{ matrix.xcode }}
+      run: sudo xcode-select -s /Applications/Xcode_${{ matrix.xcode }}.app
     - name: Get swift version
       run: swift --version
-    - name: Install
-      run: brew install swift-format
     - name: Build
       run: swift build -v
-    - name: Run tests
-      run: swift test -v
-    - name: Format
-      run: make format
-    - uses: stefanzweifel/git-auto-commit-action@v4
-      with:
-        commit_message: Run swift-format
-        branch: 'main'
+    - name: Run package tests
+      run: make test-swift
+    - name: Run build
+      run: make build-${{ matrix.platform }}
     env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
