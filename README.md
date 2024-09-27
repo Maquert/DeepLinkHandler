@@ -1,17 +1,20 @@
+[![CI](https://github.com/Maquert/DeepLinkHandler/workflows/CI/badge.svg)](https://github.com/Maquert/DeepLinkHandler/actions?query=workflow%3ACI)
 ![Swift 6.0](https://img.shields.io/badge/swift_6.0-orange?style=flat&logo=swift&logoColor=white)
 ![Platforms: iOS, macOS, tvOS, visionOS, watchOS](https://img.shields.io/badge/Platforms-iOS%20|%20macOS%20|%20tvOS%20|%20visionOS%20|%20watchOS%20-blue.svg?style=flat&logo=apple)
 [![Swift Package Manager: compatible](https://img.shields.io/badge/Swift%20Package%20Manager-compatible-4BC51D.svg?style=flat&logo=apple)](https://swift.org/package-manager/)
 [![Licence](https://img.shields.io/badge/licence-MIT-green.svg)](https://github.com/Maquert/DeepLinkHandler/blob/main/LICENSE)
 [![Last commit](https://img.shields.io/github/last-commit/Maquert/DeepLinkHandler.svg)](https://github.com/Maquert/DeepLinkHandler/commits/main)
 
-# README
+# DeepLinkHandler
 
 ![DeepLinkHandler](https://github.com/maquert/DeepLinkHandler/blob/main/DeepLinkHandler_icon.png)
 
-## DeepLinkHandler
+
+## Summary
 
 DeepLinkHandler is a lightweight and opinionated package designed to streamline how a Swift application organises 
 and manages deep links.
+
 
 ### What is a 'deep link'?
 
