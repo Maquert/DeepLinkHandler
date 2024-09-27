@@ -21,6 +21,6 @@ Where:
 
 ## Run
 
-Open `DeepLinkHandler.xcworkspace`, compile and run the app. Once installed in the simulator, you can open deep links.
+Open `DeepLinkHandler.xcworkspace` or `Examples.xcodeproj` (this directory), select the Examples scheme, compile and run the app. Once installed in the simulator, you can open deep links.
 
 The results will appear on screen.
