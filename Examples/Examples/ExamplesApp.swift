@@ -13,14 +13,12 @@ struct ExamplesApp: App {
 
           do {
             try deepLinkHandler.handle(deepLink)
-          } catch let error as DeepLinkError {
-            switch error.code {
-            case .pathNotRegistered:
+          } catch let error as DeepLinkHandleError {
+            switch error {
+            case .pathNotRegistered(_):
               assertionFailure(error.localizedDescription)
-            case .missingQueryItem:
+            case .missingQueryItem(_):
               assertionFailure(error.localizedDescription)
-            default:
-              assertionFailure("Unknown error")
             }
           } catch let someError {
             assertionFailure(someError.localizedDescription)

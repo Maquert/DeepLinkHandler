@@ -38,7 +38,7 @@ public class DeepLinkHandler {
   @MainActor
   public func register(_ path: String, action: @escaping ([URLQueryItem]?) throws -> Void) throws {
     guard paths.keys.contains(path) == false else {
-      throw DeepLinkError(.pathAlreadyRegistered)
+      throw DeepLinkRegisterError.pathAlreadyRegistered(path: path)
     }
 
     paths[path] = action
@@ -82,7 +82,7 @@ public class DeepLinkHandler {
       throw URLError(.badURL)
     }
     guard let action = paths[urlComponents.path] else {
-      throw DeepLinkError(.pathNotRegistered)
+      throw DeepLinkHandleError.pathNotRegistered(path: urlComponents.path)
     }
 
     try action(urlComponents.queryItems)

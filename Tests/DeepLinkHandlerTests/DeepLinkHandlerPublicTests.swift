@@ -37,7 +37,7 @@ import Testing
   @MainActor @Test func anExistingPathIsNOTAdded() {
     let sut = DeepLinkHandler(paths: ["/foo/bar": { _ in }])
 
-    #expect(throws: DeepLinkError(.pathAlreadyRegistered)) {
+    #expect(throws: DeepLinkRegisterError.pathAlreadyRegistered(path: "/foo/bar")) {
       try sut.register("/foo/bar", action: { _ in })
     }
 
@@ -118,7 +118,7 @@ import Testing
   @MainActor @Test func throwsAnErrorIfTriesToHandleANotRegisteredPath() {
     let sut = DeepLinkHandler(paths: ["/foo/bar": { _ in }])
 
-    #expect(throws: DeepLinkError(.pathNotRegistered)) { @MainActor in
+    #expect(throws: DeepLinkHandleError.pathNotRegistered(path: "/baz/qux")) { @MainActor in
       try sut.handle("/baz/qux")
     }
   }
