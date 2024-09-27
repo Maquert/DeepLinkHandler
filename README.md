@@ -64,12 +64,10 @@ To register a path with its corresponding action:
 do {
   // Expects URLs like `/featureA/detail?id=123`
   try deeplinkHandler.register("/featureA/detail") { queryItems in
-    guard let id = queryItems[.id] else { throw DeepLinkError(.missingQueryItem) }
+    guard let id = queryItems[.id] else { throw DeepLinkHandleError.missingQueryItem(name: Parameter.id.rawValue) }
     navigateToFeatureADetail(id: id)
-  } catch DeepLinkError.pathAlreadyRegistered {
-    // You already registered this path
-  } catch is DeepLinkError {
-    // Fallback for other deep link errors
+  } catch let error as DeepLinkHandleError {
+    // Maybe you already registered this path?
   } catch let someError {
     // Fallback for generic errors
   }
@@ -84,11 +82,14 @@ using the DeepLinkHandler instance:
   let url = ... 
   do {
    try deeplinkHandler.handle(url)
-  } catch DeepLinkError.pathNotRegistered {
-    // You never registered this path
-  } catch is DeepLinkError {
-    // Fallback for other deep link errors
-  } catch let someError { 
+  } catch let error as DeepLinkHandleError {
+    switch error {
+    case .pathNotRegistered(_):
+      // Handle and log error
+    case .missingQueryItem(_):
+      // Handle and log error
+    }
+  } catch let someError {
     // Fallback for generic errors
   }
 ```

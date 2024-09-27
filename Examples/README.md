@@ -14,7 +14,7 @@ The example deep links must be like this:
 
 Where:
 
-- `deeplinkhandler://` is the scheme necessary to trigger the app.
+- `deeplinkhandler` is the scheme necessary to trigger the app.
 - `app` is the host. Unused because the app captures the scheme.
 - `/<path>` is the section of the URL that is used to register deep link actions.
 - The `?param1=A&param2=B` items are the dynamic values that you can capture in the closure action to append dynamic values like resource identifiers.
