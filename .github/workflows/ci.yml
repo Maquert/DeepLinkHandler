@@ -20,7 +20,8 @@ jobs:
       matrix:
         xcode:
           - '16'
-        platform:
+        variant:
+          - package
           - ios
           - macos
           - examples
@@ -29,13 +30,27 @@ jobs:
     - uses: actions/checkout@v4
     - name: Select Xcode ${{ matrix.xcode }}
       run: sudo xcode-select -s /Applications/Xcode_${{ matrix.xcode }}.app
-    - name: Get swift version
-      run: swift --version
-    - name: Build
-      run: swift build -v
-    - name: Run package tests
-      run: make test-swift
     - name: Run build
-      run: make build-${{ matrix.platform }}
+      run: make build-${{ matrix.variant }}
     env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+
+  test:
+    name: test
+    runs-on: macos-latest
+    strategy:
+      matrix:
+        xcode:
+          - '16'
+        variant:
+          - package
+
+    steps:
+    - uses: actions/checkout@v4
+    - name: Select Xcode ${{ matrix.xcode }}
+      run: sudo xcode-select -s /Applications/Xcode_${{ matrix.xcode }}.app
+    - name: Get swift version
+      run: swift --version
+    - name: Run tests
+      run: make test-${{ matrix.variant }}

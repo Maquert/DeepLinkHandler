@@ -1,21 +1,22 @@
 PLATFORM_IOS = iOS Simulator,name=iPhone 16
 PLATFORM_MACOS = macOS
 
-test-all: test build
-
-test-swift:
+test-package:
 	swift test -v
+
+build-package:
+	swift build -v
 
 build-ios:
 	xcodebuild build \
 		-workspace DeepLinkHandler.xcworkspace \
-		-scheme DynamicFramework \
+		-scheme Examples \
 		-destination platform="$(PLATFORM_IOS)"
 
 build-macos:
 	xcodebuild build \
 		-workspace DeepLinkHandler.xcworkspace \
-		-scheme DynamicFramework \
+		-scheme Examples \
 		-destination platform="$(PLATFORM_MACOS)"
 
 build-examples:
