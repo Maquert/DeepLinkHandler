@@ -9,28 +9,34 @@ struct ContentView: View {
   @State private var errorMessage: String?
 
   var body: some View {
-    VStack(spacing: 8) {
-      Text("Deep Link Handler Example")
+    VStack(spacing: 16) {
+      Text("Deep Link Handler")
         .font(.largeTitle)
 
       Text(
         """
-        Open a deep link like 'deeplinkhandler://app/navigate?id=123&action=abc' to see it appear here
+        Open a deep link like 
+        'deeplinkhandler://app/navigate?id=123&action=abc'
+        to see its contents appear here.
         """
       )
-      .font(.caption)
+      .font(.footnote)
+      .foregroundStyle(.gray)
 
       Spacer()
 
       Image(systemName: "link")
         .imageScale(.large)
+        .font(.largeTitle)
         .foregroundStyle(.tint)
 
-      if let identifier {
-        Text("Action identifier: \(identifier)")
-      }
-      if let action {
-        Text("Opened action: \(action)")
+      VStack(alignment: .leading) {
+        if let identifier {
+          Text("Action identifier: \(identifier)")
+        }
+        if let action {
+          Text("Opened action: \(action)")
+        }
       }
 
       Spacer()
@@ -40,31 +46,33 @@ struct ContentView: View {
           Image(systemName: "exclamationmark.warninglight")
             .imageScale(.large)
           Text("Error: \(errorMessage)")
+            .foregroundStyle(.red)
         }
       }
 
     }
     .padding()
     .onAppear {
-      do {
-        try deepLinkHandler.register("/navigate") { parameters in
-          guard let id = parameters?[.id] else {
-            throw DeepLinkHandleError.missingQueryItem(name: Parameter.id.rawValue)
-          }
-          guard let custom = parameters?[.action] else {
-            throw DeepLinkHandleError.missingQueryItem(name: Parameter.action.rawValue)
-          }
-          self.action = custom
-          self.identifier = id
-        }
-        try deepLinkHandler.register("/navigate") { parameters in
+      registerPaths()
+    }
+  }
 
+  func registerPaths() {
+    do {
+      try deepLinkHandler.register("/navigate") { parameters in
+        guard let id = parameters?[.id] else {
+          throw DeepLinkHandleError.missingQueryItem(name: Parameter.id.rawValue)
         }
-      } catch let error as DeepLinkHandleError {
-        errorMessage = error.localizedDescription
-      } catch let someError {
-        errorMessage = someError.localizedDescription
+        guard let action = parameters?[.action] else {
+          throw DeepLinkHandleError.missingQueryItem(name: Parameter.action.rawValue)
+        }
+        self.action = action
+        self.identifier = id
       }
+    } catch let error as DeepLinkHandleError {
+      errorMessage = error.localizedDescription
+    } catch let someError {
+      errorMessage = someError.localizedDescription
     }
   }
 }
