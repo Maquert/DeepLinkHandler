@@ -66,7 +66,7 @@ do {
   try deeplinkHandler.register("/featureA/detail") { queryItems in
     guard let id = queryItems[.id] else { throw DeepLinkHandleError.missingQueryItem(name: Parameter.id.rawValue) }
     navigateToFeatureADetail(id: id)
-  } catch let error as DeepLinkHandleError {
+  } catch let error as DeepLinkRegisterError {
     // Maybe you already registered this path?
   } catch let someError {
     // Fallback for generic errors

@@ -32,6 +32,10 @@ public class DeepLinkHandler {
   ///
   /// The stored action closure will be executed when a matching path is passed to ``handle(_:)``.
   ///
+  /// ## Note on escaping closures
+  /// When you register an action its closure is stored and executed at a later time (`@escaping`).
+  /// Use `[weak self]` within the closure to avoid a retain cycle and memory leaks if you are calling it from a class.
+  ///
   /// - Parameters:
   ///   - path: the URL path expected to match a corresponding action. Do not consider query items nor the host here.
   ///   - action: the closure that will be executed for a matching URL path. The parameter passes any query items if present in the handled URL.
@@ -47,6 +51,10 @@ public class DeepLinkHandler {
   /// Registers a path and its corresponding action to be executed at a later time.
   ///
   /// Prefer ``register(_:action:)`` to avoid overwritting existing values by accident.
+  ///
+  /// ## Note on escaping closures
+  /// When you register an action its closure is stored and executed at a later time (`@escaping`).
+  /// Use `[weak self]` within the closure to avoid a retain cycle and memory leaks if you are calling it from a class.
   ///
   /// - Parameters:
   ///   - path: the URL path expected to match a corresponding action. Do not consider query items nor the host here.
