@@ -11,19 +11,25 @@ struct ExamplesApp: App {
         .onOpenURL { deepLink in
           print("Retrieved deep link: \(deepLink)")
 
-          do {
-            try deepLinkHandler.handle(deepLink)
-          } catch let error as DeepLinkHandleError {
-            switch error {
-            case .pathNotRegistered(_):
-              assertionFailure(error.localizedDescription)
-            case .missingQueryItem(_):
-              assertionFailure(error.localizedDescription)
-            }
-          } catch let someError {
-            assertionFailure(someError.localizedDescription)
-          }
+          handleURL(deepLink)
         }
+    }
+  }
+}
+
+extension ExamplesApp {
+  func handleURL(_ deepLink: URL) {
+    do {
+      try deepLinkHandler.handle(deepLink)
+    } catch let error as DeepLinkHandleError {
+      switch error {
+      case .pathNotRegistered(_):
+        assertionFailure(error.localizedDescription)
+      case .missingQueryItem(_):
+        assertionFailure(error.localizedDescription)
+      }
+    } catch let someError {
+      assertionFailure(someError.localizedDescription)
     }
   }
 }
