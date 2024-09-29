@@ -32,7 +32,7 @@ public class DeepLinkHandler {
   ///
   /// The stored action closure will be executed when a matching path is passed to ``handle(_:)-63eew``.
   ///
-  /// ## Note on escaping closures
+  /// ## Note on escaping closures
   /// When you register an action its closure is stored and executed at a later time (`@escaping`).
   /// Use `[weak self]` within the closure to avoid a retain cycle and memory leaks if you are calling it from a class.
   ///
@@ -52,7 +52,7 @@ public class DeepLinkHandler {
   ///
   /// Prefer ``register(_:action:)`` to avoid overwritting existing values by accident.
   ///
-  /// ## Note on escaping closures
+  /// ## Note on escaping closures
   /// When you register an action its closure is stored and executed at a later time (`@escaping`).
   /// Use `[weak self]` within the closure to avoid a retain cycle and memory leaks if you are calling it from a class.
   ///
