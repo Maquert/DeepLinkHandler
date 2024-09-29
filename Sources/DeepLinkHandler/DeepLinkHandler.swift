@@ -9,7 +9,7 @@ import Foundation
 ///
 /// This class is designed to be used in a **main-thread** context to ensure thread safety.
 public class DeepLinkHandler {
-  /// Stored paths. Each path contains a closure that is executed when ``handle(_:)`` receives a matching one.
+  /// Stored paths. Each path contains a closure that is executed when ``handle(_:)-63eew`` receives a matching one.
   @MainActor
   public private(set) var paths: [String: ([URLQueryItem]?) throws -> Void]
 
@@ -30,7 +30,7 @@ public class DeepLinkHandler {
   ///
   /// This method must be called from the main thread to avoid race conditions.
   ///
-  /// The stored action closure will be executed when a matching path is passed to ``handle(_:)``.
+  /// The stored action closure will be executed when a matching path is passed to ``handle(_:)-63eew``.
   ///
   /// ## Note on escaping closures
   /// When you register an action its closure is stored and executed at a later time (`@escaping`).
@@ -102,7 +102,7 @@ public class DeepLinkHandler {
   /// To handle a URI, only the path is taken into account. Any query items present in the URI
   /// will be passed to the executing closure.
   ///
-  /// - Parameter uri: URL string. You may provide a full URL, but only the path and the query items will be considered. Other elements will be ignored.
+  /// - Parameter url: URL string. You may provide a full URL, but only the path and the query items will be considered. Other elements will be ignored.
   @MainActor
   public func handle(_ url: URL) throws {
     try self.handle(url.absoluteString)
